@@ -5,6 +5,10 @@ on:
     branches:
       - main  # または master ブランチ
 
+# リポジトリへの書き込み権限を設定
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -27,7 +31,8 @@ jobs:
           NODE_OPTIONS: --openssl-legacy-provider
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
           folder: dist/angular-test  # angular.jsonのoutputPathに合わせる
           branch: gh-pages
+          token: ${{ github.token }}  # GitHub提供のトークンを使用
