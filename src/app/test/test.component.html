@@ -1,5 +1,5 @@
 <label>氏名</label>
-<input type="text" [(ngModel)]="contractInfo.agent" (blur)="checkField()" />
+<input type="text" [(ngModel)]="conInfo.name" (blur)="checkField()" />
 
 <div *ngIf="errorMessage" class="error-message">
   {{ errorMessage }}

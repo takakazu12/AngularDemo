@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ContractInfo, Params } from '../models/contract-info.model';
+import { ConInfo, Params } from '../models/con-info.model';
 import { StringUtilService } from '../services/string-util.service';
 
 @Component({
@@ -8,8 +8,8 @@ import { StringUtilService } from '../services/string-util.service';
   styleUrls: ['./test.component.scss']
 })
 export class TestComponent {
-  contractInfo: ContractInfo = {
-    agent: ''
+  conInfo: ConInfo = {
+    name: ''
   };
   
   subNo = '12345';
@@ -37,9 +37,8 @@ export class TestComponent {
 
     // API呼出 (テーブル更新)
     console.log('保存処理が実行されました');
-    console.log('入力値:', this.contractInfo.agent);
+    console.log('入力値:', this.conInfo.name);
     
-    // 実際の環境では、ここでAPIを呼び出して保存処理を行います
     const updateRes = await this.updateInfo(true);
     
     if (updateRes) {
@@ -50,7 +49,7 @@ export class TestComponent {
   async updateInfo(checkStatus: boolean): Promise<boolean> {
     // 実際の環境では、ここでAPIを呼び出して情報を更新します
     const infoData: Params = {
-      agent_entry_field: this.contractInfo.agent
+      name: this.conInfo.name ?? ''
     };
     
     console.log('更新データ:', infoData);
@@ -58,7 +57,7 @@ export class TestComponent {
   }
 
   checkField(): boolean {
-    const value = this.contractInfo.agent ?? '';
+    const value = this.conInfo.name ?? '';
     const isValid = this.stringUtil.isFullOnly(value);
     this.enableSaveButton = isValid;
     
