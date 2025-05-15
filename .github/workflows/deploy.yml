@@ -26,9 +26,12 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base-href=/AngularPageDemo/
+        run: npm run build -- --base-href=/AngularDemo/
         env:
           NODE_OPTIONS: --openssl-legacy-provider
+
+      - name: Create .nojekyll file
+        run: touch dist/angular-test/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.5.0
