@@ -1,0 +1,12 @@
+<label>氏名</label>
+<input type="text" [(ngModel)]="contractInfo.agent" (blur)="checkField()" />
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+
+<button (click)="save(0)" [disabled]="!enableSaveButton">保存</button>
+
+<div *ngIf="resultMessage" class="success-message">
+  {{ resultMessage }}
+</div>
