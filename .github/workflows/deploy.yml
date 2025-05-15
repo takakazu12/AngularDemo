@@ -1,4 +1,4 @@
-name: Deploy Static Page to GitHub Pages
+name: Deploy Angular App to GitHub Pages
 
 on:
   push:
@@ -10,74 +10,30 @@ permissions:
   contents: write
 
 jobs:
-  deploy-static-page:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Create static page directory
-        run: mkdir -p static-page
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
 
-      - name: Create static HTML
-        run: |
-          cat > static-page/index.html << 'EOL'
-          <!DOCTYPE html>
-          <html lang="ja">
-          <head>
-            <meta charset="utf-8">
-            <title>Angular Demo</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 20px;
-                background-color: #f5f5f5;
-                color: #333;
-              }
-              .container {
-                max-width: 800px;
-                margin: 0 auto;
-                background-color: white;
-                padding: 20px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-              }
-              h1 {
-                color: #1976d2;
-              }
-              p {
-                line-height: 1.6;
-              }
-              .message {
-                padding: 15px;
-                background-color: #e8f5e9;
-                border-left: 5px solid #4caf50;
-                margin-bottom: 20px;
-              }
-            </style>
-          </head>
-          <body>
-            <div class="container">
-              <h1>Angular Demo</h1>
-              <div class="message">
-                <p>このページはGitHub Pagesでホストされています。</p>
-              </div>
-              <p>ビルドの問題により、一時的な静的ページを表示しています。</p>
-              <p>Angular 12アプリケーションのビルドに関する問題を解決中です。</p>
-              <p>詳細については、<a href="https://github.com/takakazu12/AngularDemo">GitHubリポジトリ</a>を参照してください。</p>
-            </div>
-          </body>
-          </html>
-          EOL
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular app
+        run: npm run build -- --base-href=/AngularDemo/
 
       - name: Create .nojekyll file
-        run: touch static-page/.nojekyll
+        run: touch dist/angular-test/.nojekyll
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: static-page
+          folder: dist/angular-test
           branch: gh-pages
           token: ${{ github.token }}
