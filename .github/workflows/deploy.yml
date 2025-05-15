@@ -23,6 +23,8 @@ jobs:
 
       - name: Build
         run: npm run build -- --base-href=/AngularPageDemo/
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
