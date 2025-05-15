@@ -1,6 +1,7 @@
 {
   "name": "angular-test",
   "version": "0.0.0",
+  "homepage": "https://takakazu12.github.io/AngularDemo/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
